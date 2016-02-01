@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Tasks">
+      <UniqueIdentifier>{f2f98782-1429-40f3-ab8f-09e3ff7ff627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tasks\Monks">
+      <UniqueIdentifier>{d38e6c60-0a1a-4593-8c6b-4e2f06972253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data">
+      <UniqueIdentifier>{1c5dc93d-b26f-49b9-b5a3-917141a67785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Learners">
+      <UniqueIdentifier>{ca6cac53-5a11-41ab-b99e-5f0c422c16fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Networks">
+      <UniqueIdentifier>{57162572-1114-4ff8-8a16-52e99e98ecfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Networks\Neurons">
+      <UniqueIdentifier>{62140e52-3607-4b15-9e63-2b37a87e2022}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\XAA1\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\model_selection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\monks-interface.cpp">
+      <Filter>Source Files\Tasks\Monks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\task-monks.cpp">
+      <Filter>Source Files\Tasks\Monks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\data_normalization.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\sample_normalization.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\feedforward_network.cpp">
+      <Filter>Source Files\Networks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\logistic_neuron.cpp">
+      <Filter>Source Files\Networks\Neurons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\neuron.cpp">
+      <Filter>Source Files\Networks\Neurons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\backprop_learner.cpp">
+      <Filter>Source Files\Learners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\loss.cpp">
+      <Filter>Source Files\Learners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\observer.cpp">
+      <Filter>Source Files\Learners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XAA1\stop_criteria.cpp">
+      <Filter>Source Files\Learners</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\XAA1\model_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\model_selection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\monks-interface.h">
+      <Filter>Source Files\Tasks\Monks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\task-monks.h">
+      <Filter>Source Files\Tasks\Monks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\data_normalization.h">
+      <Filter>Source Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\samples.h">
+      <Filter>Source Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\sample_normalization.h">
+      <Filter>Source Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\neuron.h">
+      <Filter>Source Files\Networks\Neurons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\logistic_neuron.h">
+      <Filter>Source Files\Networks\Neurons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\feedforward_network.h">
+      <Filter>Source Files\Networks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\stop_criteria.h">
+      <Filter>Source Files\Learners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\observer.h">
+      <Filter>Source Files\Learners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\loss.h">
+      <Filter>Source Files\Learners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XAA1\backprop_learner.h">
+      <Filter>Source Files\Learners</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
