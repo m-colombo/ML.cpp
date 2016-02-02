@@ -24,7 +24,7 @@ serialization and deserialization quite a pain in the ass.
 - Monk's problem
 
 ## Portability
-- Easy to use on all run/build enviroment. Xcode and Visual studio solution are provided
+- Easy to use on all run/build enviroment
 
 ## License
 MIT
