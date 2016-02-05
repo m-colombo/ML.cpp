@@ -55,10 +55,9 @@ protected:
     double batchRatio = 1;
     
     size_t batchSize;
-    std::shared_ptr<Samples const> TR;
-    SamplesIt TR_it;
+    std::shared_ptr<Samples> TR;    //TODO const constraints
     
-    void iteration();
+    void iteration(SamplesPermutationIterator & TR_it);
     
     void backPropagateError(NetNeuronSP const &n);
     void applyWeightsCorrection(NetNeuronSP const &n);

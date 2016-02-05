@@ -13,6 +13,9 @@
 #include <string>
 #include <memory>
 
+#include <iterator>
+#include <random>
+
 typedef std::deque<double> Doubles;
 
 struct Sample{
@@ -21,9 +24,48 @@ struct Sample{
     std::string sample_id;
 };
 
+
 typedef std::deque<Sample> Samples;
 typedef std::shared_ptr<Samples> SamplesSP;
-typedef std::deque<Sample>::const_iterator SamplesIt;
+
+
+class SamplesPermutationIterator;
+class SamplesPermutation {
+    static std::minstd_rand0 rand;
+    SamplesSP samples;
+    std::deque<int> permutation;
+    
+public:
+    SamplesPermutation(SamplesSP const & samples) : samples(samples), permutation(getPermutation(samples->size())){}
+                                                                                  
+    static std::deque<int> getPermutation(size_t size);
+    SamplesPermutationIterator begin();
+    SamplesPermutationIterator end();
+    
+};
+
+class SamplesPermutationIterator : public std::iterator<std::forward_iterator_tag, const Sample>{
+    size_t idx = 0;
+    std::deque<int>& permutation;
+    SamplesSP const & samples;
+
+public:
+    SamplesPermutationIterator(SamplesSP const & samples, std::deque<int> & permutation) : samples(samples), permutation(permutation){};
+    SamplesPermutationIterator(const SamplesPermutationIterator& it) = default;
+    
+    SamplesPermutationIterator& operator++() {++idx;return *this;}
+    SamplesPermutationIterator operator++(int) {SamplesPermutationIterator tmp(*this); ++*this; return tmp;}
+    
+    bool isEnd() const {return idx >= permutation.size();}
+    void goToEnd(){ idx = permutation.size();}
+    void goToBegin(){ idx = 0; }
+    
+    bool operator==(const SamplesPermutationIterator& it) {return (idx == it.idx || (isEnd() && it.isEnd())) && &permutation == &(it.permutation);}
+    bool operator!=(const SamplesPermutationIterator& it) {return !operator==(it);}
+    Sample const& operator*() {return (*samples)[permutation[idx]];}
+    
+    
+};
 
 
 struct Result{

@@ -12,10 +12,12 @@ void BackPropagation::learn(std::shared_ptr<Samples>& train, std::pair<double,do
 
     TR = train;
     setBatchRatio(batchRatio);
-    TR_it = TR->begin();
     current_iteration = 0;
     N.randomizeWeights(initial_weight_range.first, initial_weight_range.second);
 
+    SamplesPermutation permutation(TR);
+    auto TR_it = permutation.begin();
+    
     for(auto& s : StopCriteria)
         s->reset();
     
@@ -23,7 +25,7 @@ void BackPropagation::learn(std::shared_ptr<Samples>& train, std::pair<double,do
         o->preLearn(*this);
     
     do{
-        iteration();
+        iteration(TR_it);
 
         //For debug purposes
         //cout << "Iteration " << current_iteration << " Error " << iteration_error << endl;
@@ -37,7 +39,7 @@ void BackPropagation::learn(std::shared_ptr<Samples>& train, std::pair<double,do
         o->postLearn(*this);
 }
 
-void BackPropagation::iteration(){
+void BackPropagation::iteration(SamplesPermutationIterator & TR_it){
 
     current_iteration++;
     iteration_error = 0;
@@ -75,7 +77,8 @@ void BackPropagation::iteration(){
         
         //Next sample
         TR_it++;
-        if (TR_it == TR->end()) TR_it = TR->begin();
+        if (TR_it.isEnd())
+            TR_it.goToBegin();
     }
     iteration_error /= batchSize;
     
