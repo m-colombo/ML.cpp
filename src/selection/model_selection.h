@@ -9,10 +9,10 @@
 #ifndef __XAA1__model_selection__
 #define __XAA1__model_selection__
 
-#include "samples.h"
-#include "backprop_learner.h"
-#include "sample_normalization.h"
-#include "scorer.hpp"
+#include "../data/samples.h"
+#include "../learners/backprop_learner.h"
+#include "../data/data_normalization.h"
+#include "../selection/scorers/scorer.hpp"
 
 #include<functional>
 

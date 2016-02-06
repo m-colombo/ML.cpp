@@ -1,10 +1,10 @@
 
 #include "task-monks.h"
 #include "monks-interface.h"
-#include "stop_criteria.h"
-#include "backprop_learner.h"
-#include "logistic_neuron.h"
-#include "observer.h"
+#include "../../learners/stop/stop_criteria.h"
+#include "../../learners/backprop_learner.h"
+#include "../../neurons/logistic_neuron.h"
+#include "../../learners/observer/observer.h"
 
 #include <iostream>
 

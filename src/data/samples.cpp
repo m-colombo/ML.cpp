@@ -8,14 +8,15 @@
 
 #include "samples.h"
 #include <ctime>
+#include <algorithm>
 
 //static
 std::minstd_rand0 SamplesPermutation::rand = std::minstd_rand0((int) time(NULL));
 
 //static
-std::deque<int> SamplesPermutation::getPermutation(size_t size){
-    std::deque<int> permutation;
-    for(int i = 0; i < size;)
+std::deque<size_t> SamplesPermutation::getPermutation(size_t size){
+    std::deque<size_t> permutation;
+    for(size_t i = 0; i < size;)
         permutation.push_back(i++);
     std::shuffle(permutation.begin(), permutation.end(), rand);
     return permutation;

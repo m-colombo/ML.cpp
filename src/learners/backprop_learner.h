@@ -1,8 +1,8 @@
 #ifndef _BACKPROP_H
 #define _BACKPROP_H
 
-#include "feedforward_network.h"
-#include "loss.h"
+#include "../networks/feedforward_network.h"
+#include "../learners/loss/loss.h"
 
 #include <limits>
 

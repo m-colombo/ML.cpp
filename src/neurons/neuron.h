@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 #include <memory>
-#include "model_info.h"
+#include "../selection/model_info.h"
 
 class Neuron {
 public:

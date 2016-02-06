@@ -12,7 +12,7 @@
 #include "samples.h"
 #include "data_normalization.h"
 #include <cassert>
-#include "model_info.h"
+#include "../selection/model_info.h"
 
 class SampleNormalizer : public ModelInfo{
     std::deque<DataNormalizerSP> input_normalizers, output_normalizers;

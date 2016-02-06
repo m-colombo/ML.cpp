@@ -13,7 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include "stop_criteria.h"
+#include "../learners/stop/stop_criteria.h"
 #include <limits>
 
 using namespace std;

@@ -33,12 +33,12 @@ class SamplesPermutationIterator;
 class SamplesPermutation {
     static std::minstd_rand0 rand;
     SamplesSP samples;
-    std::deque<int> permutation;
+    std::deque<size_t> permutation;
     
 public:
     SamplesPermutation(SamplesSP const & samples) : samples(samples), permutation(getPermutation(samples->size())){}
                                                                                   
-    static std::deque<int> getPermutation(size_t size);
+    static std::deque<size_t> getPermutation(size_t size);
     SamplesPermutationIterator begin();
     SamplesPermutationIterator end();
     
@@ -46,11 +46,11 @@ public:
 
 class SamplesPermutationIterator : public std::iterator<std::forward_iterator_tag, const Sample>{
     size_t idx = 0;
-    std::deque<int>& permutation;
+    std::deque<size_t>& permutation;
     SamplesSP const & samples;
 
 public:
-    SamplesPermutationIterator(SamplesSP const & samples, std::deque<int> & permutation) : samples(samples), permutation(permutation){};
+    SamplesPermutationIterator(SamplesSP const & samples, std::deque<size_t> & permutation) : samples(samples), permutation(permutation){};
     SamplesPermutationIterator(const SamplesPermutationIterator& it) = default;
     
     SamplesPermutationIterator& operator++() {++idx;return *this;}

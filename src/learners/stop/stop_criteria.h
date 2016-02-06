@@ -9,7 +9,7 @@
 #ifndef XAA1_stop_criteria_h
 #define XAA1_stop_criteria_h
 
-#include "backprop_learner.h"
+#include "../backprop_learner.h"
 #include <string>
 
 namespace Stop {

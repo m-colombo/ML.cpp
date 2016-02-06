@@ -9,7 +9,7 @@
 #ifndef __XAA1__observer__
 #define __XAA1__observer__
 
-#include "backprop_learner.h"
+#include "../backprop_learner.h"
 #include <fstream>
 
 

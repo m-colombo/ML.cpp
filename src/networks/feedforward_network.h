@@ -2,11 +2,11 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-#include "neuron.h"
-#include "samples.h"
-#include "util.h"
-#include "loss.h"
-#include "model_info.h"
+#include "../neurons/neuron.h"
+#include "../data/samples.h"
+#include "../util.h"
+#include "../learners/loss/loss.h"
+#include "../selection/model_info.h"
 
 #include <deque>
 #include <map>

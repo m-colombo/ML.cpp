@@ -10,7 +10,7 @@
 #define __XAA1__data_normalization__
 
 #include "samples.h"
-#include "model_info.h"
+#include "../selection/model_info.h"
 
 //TODO extend for 1-of-k
 class DataNormalizer : public ModelInfo{

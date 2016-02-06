@@ -9,7 +9,7 @@
 #ifndef scorer_hpp
 #define scorer_hpp
 
-#include "observer.h"
+#include "../../learners/observer/observer.h"
 #include <limits>
 
 namespace Scorer{

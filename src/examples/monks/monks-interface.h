@@ -9,7 +9,7 @@
 #ifndef __XAA1__monks_interface__
 #define __XAA1__monks_interface__
 
-#include "samples.h"
+#include "../../data/samples.h"
 
 class Monks{
 public:

@@ -9,8 +9,8 @@
 #ifndef __XAA1__loss__
 #define __XAA1__loss__
 
-#include "model_info.h"
-#include "sample_normalization.h"
+#include "../../selection/model_info.h"
+#include "../../data/sample_normalization.h"
 
 class Loss : public ModelInfo {
 public:
@@ -29,7 +29,7 @@ class DenormalizedLoss : public Loss {
 public:
     DenormalizedLoss(SampleNormalizer const & denormalizer, std::shared_ptr<Loss> loss) :
         loss(loss),
-        denormalizer(denormalizer)
+		denormalizer(denormalizer)
     {}
     
     double sampleError(Doubles const & outs, Doubles const & targets) override {

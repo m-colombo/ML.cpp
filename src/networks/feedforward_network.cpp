@@ -1,5 +1,4 @@
 
-#include "neuron.h"
 #include "feedforward_network.h"
 #include <random>
 #include <ctime>
