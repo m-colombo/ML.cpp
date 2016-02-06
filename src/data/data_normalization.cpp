@@ -31,7 +31,7 @@ double MinMaxNormalizer::denormalize(double value){
 }
 
 void ZNormalizer::setDataSource(const Doubles &values){
-    double sum = std::accumulate(values.begin(), values.end(), 0);
+    double sum = std::accumulate(values.begin(), values.end(), 0.0);
     mean = sum / (double)values.size();
     
     double accum = 0.0;
