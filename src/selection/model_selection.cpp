@@ -125,9 +125,7 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
                         info << "Selection size: " << to_string(selection->size()) << endl;
                         info.close();
                 
-                        //TODO abstract scoring methods
-                        double best_trial = std::numeric_limits<double>::max();
-                        
+                        modelScoreMethod->reset();
                         for(int trial = 1; trial <= trials; trial++){
                             auto trial_dir = createSubFolder(model_dir, "trial_"+to_string(trial));
                             auto learner = BackPropagation(*network, *gLoss, nLoss, batchR);
@@ -142,11 +140,10 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
                                 learner.StopCriteria = stopCriteria;
                             
 							auto score = make_shared<Observer::Score>(selection_n, targetLoss, 10);
-							learner.observers = { score };
+                            
+							learner.observers = { modelScoreMethod };
 
                             learner.learn(train_n, wi);
-                            
-                            best_trial = std::min(best_trial, score->best.second);
                             
                             ofstream stopInfo(trial_dir+"/stop.txt");
                             stopInfo << learner.Stopper->stopMessage() << endl;
@@ -154,7 +151,7 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
 							stopInfo << "Best: " << score->best.second << " at " << score->best.first << endl;
                             stopInfo.close();
                         }
-                        process_results.insert({best_trial, model});
+                        process_results.insert({modelScoreMethod->getScore(), model});
 
 						cout << "Testing model " << model << "\t of " << total << "\tBest: " << process_results.begin()->first << "\t" << process_results.begin()->second << endl;
                     }}}}

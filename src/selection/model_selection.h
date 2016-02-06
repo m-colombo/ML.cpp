@@ -12,6 +12,7 @@
 #include "samples.h"
 #include "backprop_learner.h"
 #include "sample_normalization.h"
+#include "scorer.hpp"
 
 #include<functional>
 
@@ -22,6 +23,7 @@ public:
     //Search parameters
     std::shared_ptr<Loss> targetLoss;
     int trials = 1;
+    std::shared_ptr<Scorer::IScorer> modelScoreMethod;
     
     //When stop criteria depends on the normalization methods they can be generated
     std::function<std::deque<std::shared_ptr<Stop::Criteria>>(SamplesSP normalized_selection, std::shared_ptr<DenormalizedLoss> dloss)> stopCriteriaGen;
