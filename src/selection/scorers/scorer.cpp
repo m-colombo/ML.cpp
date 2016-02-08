@@ -16,8 +16,12 @@ namespace Scorer{
         int it = learner.current_iteration;
         if (it > iterations_to_skip && it % iterations_step == 0) {
             double er = learner.N.testDataSet(*data, *loss);
-            if (current_best.second > er)
-                current_best = {it, er};
+            if(previous_error != std::numeric_limits<double>::infinity()){
+                double avg = (er + previous_error) / 2.0;
+                if (current_best.second > avg)
+                    current_best = {it, avg};
+            }
+            previous_error = er;
         }
     }
 

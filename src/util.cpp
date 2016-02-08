@@ -11,8 +11,7 @@ double rand_in_range(double a, double b){
 
 string createAndGetRunFolder(string const & parent){
     time_t now; time(&now);
-	struct tm * t=0;
-	localtime_s(t, &now);
+	struct tm * t=localtime(&now);
     char t_str[20];
     snprintf(t_str,20, "%d-%.2d-%.2d.%.2d-%.2d-%.2d", (t->tm_year+1900), t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
     

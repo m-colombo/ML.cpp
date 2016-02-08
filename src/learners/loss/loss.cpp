@@ -30,7 +30,7 @@ double MeanEuclideanError::sampleError(Doubles const & outs, Doubles const & tar
     for(; t != targets.end(); t++, o++)
         sum += (*t-*o)*(*t-*o);
     
-    return std::sqrt(sum);
+    return static_cast<double>(std::sqrt(sum));
 }
 
 //TODO avoid recomputing sample error for each out

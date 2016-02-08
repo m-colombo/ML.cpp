@@ -26,6 +26,10 @@ namespace Scorer{
         std::shared_ptr<Loss> loss;
         int current_trial = 0;
         int iterations_to_skip, iterations_step;
+
+        //int moving_average_window; TODO actually implement
+        double previous_error = std::numeric_limits<double>::infinity(); //Implementing a moving average of size two to smooth fluctuation
+        
         
         std::map<int, std::pair<int, double>> results; // Trial -> Iteration x Error
         std::pair<int, double> current_best = {-1, std::numeric_limits<int>::max() };    //Iteration, error
@@ -36,7 +40,8 @@ namespace Scorer{
             data(data),
             loss(loss),
             iterations_step(iterations_step),
-            iterations_to_skip(initial_iterations_to_skip){}
+            iterations_to_skip(initial_iterations_to_skip)
+            {}
         
         void postIteration(BackPropagation const& learner) override;
         void postLearn(BackPropagation const& learner) override;
