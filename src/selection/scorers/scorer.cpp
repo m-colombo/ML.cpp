@@ -15,11 +15,12 @@ namespace Scorer{
     void AverageBestLoss::postIteration(const BackPropagation &learner){
         int it = learner.current_iteration;
         if (it > iterations_to_skip && it % iterations_step == 0) {
-            double er = learner.N.testDataSet(*data, *loss);
+            double er = learner.N.testDataSet(selection_n, *dLoss);
+            
             if(previous_error != std::numeric_limits<double>::infinity()){
                 double avg = (er + previous_error) / 2.0;
-                if (current_best.second > avg)
-                    current_best = {it, avg};
+                if (std::get<1>(current_best) > avg)
+                    current_best = {it, avg, learner.N.testDataSet(validation_n, *dLoss)};
             }
             previous_error = er;
         }
@@ -27,24 +28,32 @@ namespace Scorer{
 
     void AverageBestLoss::postLearn(const BackPropagation &learner){
         results[current_trial++] = current_best;
-        current_best = {-1, std::numeric_limits<int>::max() };
+        current_best = {-1, std::numeric_limits<double>::max(),std::numeric_limits<double>::max()};
     }
     
     double AverageBestLoss::getScore(){
         double avg = 0;
         for(auto& r : results)
-            avg += r.second.second;
+            avg += std::get<1>(r.second);
         return avg/results.size();
     }
     
-    void AverageBestLoss::reset(){
-        current_trial = 0;
-        results = decltype(results)();
-        current_best = {-1, std::numeric_limits<int>::max()};
+    double AverageBestLoss::getValidation(){
+        double avg = 0;
+        for(auto& r : results)
+            avg += std::get<2>(r.second);
+        return avg/results.size();
     }
     
-    void AverageBestLoss::setData(SamplesSP& data, std::shared_ptr<DenormalizedLoss>& loss){
-        this->data = data;
-        this->loss = loss;
+    void AverageBestLoss::newModel(){
+        current_trial = 0;
+        results = decltype(results)();
+        current_best = {-1, std::numeric_limits<double>::max(), std::numeric_limits<double>::max()};
+    }
+    
+    void AverageBestLoss::setSampleNormalizer(const SampleNormalizer &normalizer){
+        selection_n = normalizer.normalizeDataset(*selection);
+        validation_n = normalizer.normalizeDataset(*validation);
+        dLoss = std::make_shared<DenormalizedLoss>(normalizer, loss);
     }
 }

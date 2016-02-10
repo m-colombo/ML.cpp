@@ -79,7 +79,7 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
 	int model = 0;
 	size_t total = getTotalModels();
 
-    std::multimap<double, int> process_results;
+    std::multimap<double, std::pair<int, double>> process_results; //Selection -> model_id x validation
     
     //Search info
     if(process_number == 0){
@@ -98,7 +98,7 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
         auto selection_n = make_shared<Samples>(norm.normalizeDataset(*selection));
         auto nLoss = make_shared<DenormalizedLoss>(norm, targetLoss);
         
-        modelScoreMethod->setData(selection_n, nLoss);
+        modelScoreMethod->setSampleNormalizer(norm);
         
         for(auto& network : topologies){
             for(auto& gLoss : gradientLoss){
@@ -128,7 +128,7 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
                         info << "Selection size: " << to_string(selection->size()) << endl;
                         info.close();
                 
-                        modelScoreMethod->reset();
+                        modelScoreMethod->newModel();
                         for(int trial = 1; trial <= trials; trial++){
                             auto trial_dir = createSubFolder(model_dir, "trial_"+to_string(trial));
                             auto learner = BackPropagation(*network, *gLoss, *nLoss, batchR);
@@ -154,9 +154,9 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
 							stopInfo << "Best: " << score->best.second << " at " << score->best.first << endl;
                             stopInfo.close();
                         }
-                        process_results.insert({modelScoreMethod->getScore(), model});
+                        process_results.insert({modelScoreMethod->getScore(),{model, modelScoreMethod->getValidation()}});
 
-						cout << "Testing model " << model << "\t of " << total << "\tBest: " << process_results.begin()->first << "\t" << process_results.begin()->second << endl;
+						cout << "Testing model " << model << "\t of " << total << "\tBest: " << process_results.begin()->first << "\t" << process_results.begin()->second.first << endl;
                     }}}}
                 }
             }
@@ -166,7 +166,7 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
     //Write into a file the best results every process has found
     ofstream resultInfo(results_dir + "/results_" + to_string(process_number) + ".csv");
     for(auto& p : process_results)
-        resultInfo << p.first << "," << p.second << endl;
+        resultInfo << p.first << "," << p.second.first <<  "," << p.second.second << endl;
     resultInfo.close();
     
 }

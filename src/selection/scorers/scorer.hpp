@@ -10,21 +10,27 @@
 #define scorer_hpp
 
 #include "../../learners/observer/observer.h"
+#include "../../data/sample_normalization.h"
 #include <limits>
 
 namespace Scorer{
     class IScorer : public Observer::IObserver{
     public:
         virtual double getScore()=0;
-        virtual void setData(SamplesSP& data, std::shared_ptr<DenormalizedLoss>& loss)=0;
-        virtual void reset(){};
+        virtual void setSampleNormalizer(SampleNormalizer const& normalizer){};
+        virtual void newModel(){};
+        virtual double getValidation()=0;
         virtual ~IScorer()=default;
     };
     
     class AverageBestLoss : public IScorer {
         
-        SamplesSP data;
+        SamplesSP selection, validation;
+        Samples selection_n, validation_n;
+        
         std::shared_ptr<Loss> loss;
+        std::shared_ptr<DenormalizedLoss> dLoss;
+        
         int current_trial = 0;
         int iterations_to_skip, iterations_step;
 
@@ -32,22 +38,26 @@ namespace Scorer{
         double previous_error = std::numeric_limits<double>::infinity(); //Implementing a moving average of size two to smooth fluctuation
         
         
-        std::map<int, std::pair<int, double>> results; // Trial -> Iteration x Error
-        std::pair<int, double> current_best = {-1, std::numeric_limits<int>::max() };    //Iteration, error
+        std::map<int, std::tuple<int, double, double>> results; // Trial -> Iteration x selection x validation
+        std::tuple<int, double, double> current_best = {-1, std::numeric_limits<double>::max(), std::numeric_limits<double>::max()};    // iteration x selection x validation
         
     public:
         
-        AverageBestLoss(int initial_iterations_to_skip, int iterations_step) :
+        AverageBestLoss(LossSP loss, int initial_iterations_to_skip, int iterations_step, SamplesSP selection, SamplesSP validation) :
+            loss(loss),
             iterations_step(iterations_step),
-            iterations_to_skip(initial_iterations_to_skip)
+            iterations_to_skip(initial_iterations_to_skip),
+            selection(selection),
+            validation(validation)
             {}
         
         void postIteration(BackPropagation const& learner) override;
         void postLearn(BackPropagation const& learner) override;
         
         double getScore() override;
-        void setData(SamplesSP& data, std::shared_ptr<DenormalizedLoss>& loss) override;
-        void reset() override;
+        double getValidation() override;
+        void setSampleNormalizer(SampleNormalizer const& normalizer) override;
+        void newModel() override;
     };
 }
 
