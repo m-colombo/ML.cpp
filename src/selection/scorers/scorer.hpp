@@ -39,7 +39,7 @@ namespace Scorer{
         
         
         std::map<int, std::tuple<int, double, double>> results; // Trial -> Iteration x selection x validation
-        std::tuple<int, double, double> current_best = {-1, std::numeric_limits<double>::max(), std::numeric_limits<double>::max()};    // iteration x selection x validation
+        std::tuple<int, double, double> current_best = std::make_tuple(-1, std::numeric_limits<double>::max(), std::numeric_limits<double>::max());    // iteration x selection x validation
         
     public:
         

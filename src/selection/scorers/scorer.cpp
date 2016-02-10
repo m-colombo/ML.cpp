@@ -20,7 +20,7 @@ namespace Scorer{
             if(previous_error != std::numeric_limits<double>::infinity()){
                 double avg = (er + previous_error) / 2.0;
                 if (std::get<1>(current_best) > avg)
-                    current_best = {it, avg, learner.N.testDataSet(validation_n, *dLoss)};
+                    current_best = std::make_tuple(it, avg, learner.N.testDataSet(validation_n, *dLoss));
             }
             previous_error = er;
         }
@@ -28,7 +28,7 @@ namespace Scorer{
 
     void AverageBestLoss::postLearn(const BackPropagation &learner){
         results[current_trial++] = current_best;
-        current_best = {-1, std::numeric_limits<double>::max(),std::numeric_limits<double>::max()};
+        current_best = std::make_tuple(-1, std::numeric_limits<double>::max(),std::numeric_limits<double>::max());
     }
     
     double AverageBestLoss::getScore(){
@@ -48,7 +48,7 @@ namespace Scorer{
     void AverageBestLoss::newModel(){
         current_trial = 0;
         results = decltype(results)();
-        current_best = {-1, std::numeric_limits<double>::max(), std::numeric_limits<double>::max()};
+        current_best = std::make_tuple(-1, std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
     }
     
     void AverageBestLoss::setSampleNormalizer(const SampleNormalizer &normalizer){
