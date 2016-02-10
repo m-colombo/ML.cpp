@@ -96,7 +96,10 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
     for(auto& norm : normalizers){
         auto train_n = make_shared<Samples>(norm.normalizeDataset(*train));
         auto selection_n = make_shared<Samples>(norm.normalizeDataset(*selection));
-        DenormalizedLoss nLoss(norm, targetLoss);
+        auto nLoss = make_shared<DenormalizedLoss>(norm, targetLoss);
+        
+        modelScoreMethod->setData(selection_n, nLoss);
+        
         for(auto& network : topologies){
             for(auto& gLoss : gradientLoss){
                 for(auto& wi : initialWeights){
@@ -128,19 +131,19 @@ void GridSearchHoldOutCV::search(int process_number,int process_total){
                         modelScoreMethod->reset();
                         for(int trial = 1; trial <= trials; trial++){
                             auto trial_dir = createSubFolder(model_dir, "trial_"+to_string(trial));
-                            auto learner = BackPropagation(*network, *gLoss, nLoss, batchR);
+                            auto learner = BackPropagation(*network, *gLoss, *nLoss, batchR);
                             
                             learner.learning_rate = eta;
                             learner.momentum = alpha;
                             learner.weight_decay = lamda;
                             
                             if(stopCriteriaGen)
-                                learner.StopCriteria = stopCriteriaGen(selection_n, make_shared<DenormalizedLoss>(nLoss));
+                                learner.StopCriteria = stopCriteriaGen(selection_n,nLoss);
                             else
                                 learner.StopCriteria = stopCriteria;
                             
-							auto score = make_shared<Observer::Score>(selection_n, targetLoss, 10);
-                            
+							auto score = make_shared<Observer::Score>(selection_n, nLoss, 10);
+
 							learner.observers = { modelScoreMethod };
 
                             learner.learn(train_n, wi);

@@ -42,4 +42,9 @@ namespace Scorer{
         results = decltype(results)();
         current_best = {-1, std::numeric_limits<int>::max()};
     }
+    
+    void AverageBestLoss::setData(SamplesSP& data, std::shared_ptr<DenormalizedLoss>& loss){
+        this->data = data;
+        this->loss = loss;
+    }
 }

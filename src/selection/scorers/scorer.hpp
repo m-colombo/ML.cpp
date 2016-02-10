@@ -16,6 +16,7 @@ namespace Scorer{
     class IScorer : public Observer::IObserver{
     public:
         virtual double getScore()=0;
+        virtual void setData(SamplesSP& data, std::shared_ptr<DenormalizedLoss>& loss)=0;
         virtual void reset(){};
         virtual ~IScorer()=default;
     };
@@ -36,9 +37,7 @@ namespace Scorer{
         
     public:
         
-        AverageBestLoss(SamplesSP data, std::shared_ptr<Loss> loss, int initial_iterations_to_skip, int iterations_step) :
-            data(data),
-            loss(loss),
+        AverageBestLoss(int initial_iterations_to_skip, int iterations_step) :
             iterations_step(iterations_step),
             iterations_to_skip(initial_iterations_to_skip)
             {}
@@ -47,6 +46,7 @@ namespace Scorer{
         void postLearn(BackPropagation const& learner) override;
         
         double getScore() override;
+        void setData(SamplesSP& data, std::shared_ptr<DenormalizedLoss>& loss) override;
         void reset() override;
     };
 }
